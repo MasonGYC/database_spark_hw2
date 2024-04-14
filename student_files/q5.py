@@ -29,9 +29,9 @@ df = df.withColumn("co-cast", array(col("actor1"), col("actor2")))
 df = df.withColumn("co-cast", array_sort(col("co-cast")).cast("string"))
 
 
-df = df.dropDuplicates(["movie_id", "title", "co-cast"]).sort(col("co-cast").desc())
+df = df.dropDuplicates(["movie_id", "title", "co-cast"])
 
-df1 = df.groupBy("co-cast").agg(count("*").alias("cnt")).filter(col("cnt") >= 2).sort(col("co-cast").desc())
+df1 = df.groupBy("co-cast").agg(count("*").alias("cnt")).filter(col("cnt") >= 2)
 
 result = df.join(df1, ["co-cast"], "inner").drop("co-cast", "cnt")
 result.show()
